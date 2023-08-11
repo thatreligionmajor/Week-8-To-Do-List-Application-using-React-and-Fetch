@@ -3,8 +3,9 @@ import React from "react";
 const ToDoItem = ({item, index, removeListItem}) => {
     return (
         <li key={index}>
-            {item}
-            <button className="deleteButton" onClick={() => removeListItem(index)}>
+            {item.label}
+            <button className="deleteButton" 
+            onClick={() => removeListItem(index)}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"

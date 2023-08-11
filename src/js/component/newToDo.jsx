@@ -110,9 +110,13 @@ const NewToDo = () => {
               ))}
               <hr></hr>
               <li className="footer">{
-                items.length == 1 ? `${items.length} task left`
-                : items.length > 1 ? `${items.length} tasks left` 
-                : "Do or do not, there is no try."}</li>
+                items.length == 1 
+                ? `${items.length} task left`
+                : items.length > 1 
+                ? `${items.length} tasks left` 
+                : "Do or do not, there is no try."}
+                <p>{getTask()}</p>
+                </li>
             </ul>
           </div>
         </>
