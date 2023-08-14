@@ -6,14 +6,15 @@ const NewToDo = () => {
     const[input, setInput] = useState("");
     const [items, setItems] = useState([]);
 
+
     function addItem(newItem) {
-      let hardcodedTask = [...items, { label: newItem, done: false }];
+      let newTaskArray = [...items, { label: newItem, done: false }];
       fetch("https://playground.4geeks.com/apis/fake/todos/user/theresearch", {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(hardcodedTask)
+        body: JSON.stringify(newTaskArray)
     })
     .then( response => {
         if(!response.ok) throw Error(response.statusText);
@@ -21,19 +22,10 @@ const NewToDo = () => {
     }
     )
     .then(response => {
-      response.status == 200 ? setItems(hardcodedTask) : ""
+      response.status == 200 ? setItems(newTaskArray) : ""
     })
     .catch(error => console.log(error))
 }
-    //     if (!input) {
-    //         alert("You can't create an empty task!")
-    //         return;
-    //     }
-    //     assignNewTask();   
-    //     setItems(oldList => [...oldList, input]);
-    //     setInput("");
-    //     console.log(items)
-    // }
 
     function getTask() {
       fetch("https://playground.4geeks.com/apis/fake/todos/user/theresearch", {
@@ -48,13 +40,13 @@ const NewToDo = () => {
       }
       )
       .then(result => {
-        setItems(result)
+        setItems(result);
       })
       .catch(error => console.log(error))
   }
   console.log(items, "data")
 
-    function assignNewTask() {
+    function assignNewTask(input) { 
         fetch("https://playground.4geeks.com/apis/fake/todos/user/theresearch", {
             method: "PUT",
             body: JSON.stringify(input),
@@ -68,14 +60,15 @@ const NewToDo = () => {
         }
         )
         .then(response => {
-            console.log("Success:", response)
+            console.log("Success:", response);
         })
         .catch(error => console.log(error))
     }
 
     function removeListItem(index) {
-        const newList = items.filter((item, i) => i !== index);
+        const newList = items.filter((item, currentIndex) => index !== currentIndex);
         setItems(newList);
+        assignNewTask(newList);
       }
 
     // useEffect(() => {
@@ -85,15 +78,17 @@ const NewToDo = () => {
     //     setInput(data[0].label),
     //     // setInput(data)
     // )}, [])
+    
     return(
         <>
         <div className="inputWrapper">
             <InputField input={input} setInput={setInput} />
             <button className="createNewTask" onClick={() => {
-              if (input == "") 
-                  return alert("You need to add a task!")
+              if (input == "") {
+                  return alert("You can't create an empty task!")
+              } else {
                 addItem(input)
-              
+                setInput("") }
               }}>
               create new task
             </button>
