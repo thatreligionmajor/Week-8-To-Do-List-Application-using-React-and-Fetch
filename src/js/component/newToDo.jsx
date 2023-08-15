@@ -19,37 +19,20 @@ const NewToDo = () => {
     .then( response => {
         if(!response.ok) throw Error(response.statusText);
     return response.json();
-    }
-    )
+    })
     .then(response => {
-      response.status == 200 ? setItems(newTaskArray) : ""
+      setItems(newTaskArray)
     })
     .catch(error => console.log(error))
 }
 
-    function getTask() {
-      fetch("https://playground.4geeks.com/apis/fake/todos/user/theresearch", {
-          method: "GET",
-          headers: {
-              "Content-Type": "application/json",
-          }
-      })
-      .then( response => {
-          if(!response.ok) throw Error(response.statusText);
-      return response.json();
-      }
-      )
-      .then(result => {
-        setItems(result);
-      })
-      .catch(error => console.log(error))
-  }
   console.log(items, "data")
 
-    function assignNewTask(input) { 
+    function removeListItem(index) {
+        const newList = items.filter((item, currentIndex) => index !== currentIndex);
         fetch("https://playground.4geeks.com/apis/fake/todos/user/theresearch", {
             method: "PUT",
-            body: JSON.stringify(input),
+            body: JSON.stringify(newList),
             headers: {
                 "content-Type": "application/json",
             }
@@ -59,25 +42,24 @@ const NewToDo = () => {
         return response.json();
         }
         )
-        .then(response => {
-            console.log("Success:", response);
+        .then(result => {
+            console.log("Success:", result);
+            setItems(newList);
         })
-        .catch(error => console.log(error))
-    }
-
-    function removeListItem(index) {
-        const newList = items.filter((item, currentIndex) => index !== currentIndex);
-        setItems(newList);
-        assignNewTask(newList);
+        .catch(error => console.log(error));
       }
 
-    // useEffect(() => {
-    //   fetch("https://playground.4geeks.com/apis/fake/todos/user/theresearch")
-    //   .then(response => response.json())
-    //   .then(data => 
-    //     setInput(data[0].label),
-    //     // setInput(data)
-    // )}, [])
+    useEffect(() => {
+      fetch("https://playground.4geeks.com/apis/fake/todos/user/theresearch")
+      .then(response => response.json())
+      .then(data => {
+        console.log(data) // always do this, because you won't always know what is there
+        setItems(data)
+      })
+      .catch(
+        error => console.error("This is an error: ", error)
+      )
+  }, [])
     
     return(
         <>
@@ -110,7 +92,6 @@ const NewToDo = () => {
                 : items.length > 1 
                 ? `${items.length} tasks left` 
                 : "Do or do not, there is no try."}
-                <p>{getTask()}</p>
                 </li>
             </ul>
           </div>

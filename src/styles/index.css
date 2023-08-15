@@ -28,12 +28,17 @@ button {
     margin-left: 5px;
     background-color: #596e79;
     color: white;
+    border: none;
+}
+
+button:active {
+    background-color: #374953;   
 }
 
 .createNewTask {
     border-radius: 10px;
     width: 20%;
-    font-family: Avenir;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .deleteButton {
@@ -42,7 +47,7 @@ button {
     float: right;
 }
 
-.listWrapper:hover .deleteButton {
+li:hover .deleteButton {
     visibility: visible;
 }
 
@@ -68,7 +73,12 @@ li {
     font-family: Avenir;
     display: flex;
     align-content: space-between;
-    width: 75%;
+    width: 100%;
+}
+
+.listItemLine {
+    display: flex;
+    justify-content: space-between;
 }
 
 hr {

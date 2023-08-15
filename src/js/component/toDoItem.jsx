@@ -2,7 +2,7 @@ import React from "react";
 
 const ToDoItem = ({item, index, removeListItem}) => {
     return (
-        <li key={index}>
+        <li className="listItemLine" key={index}>
             {item.label}
             <button className="deleteButton" 
             onClick={() => removeListItem(index)}>
